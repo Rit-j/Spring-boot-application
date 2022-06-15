@@ -1,4 +1,4 @@
-# demo
+# Spring-boot-demo-project
 Spring boot demo project.
 This is a spring boot application, which I had created while I was learning spring boot. Here, I have used mysql for the database.
 In this project, I created a User.java class, which is an Entity.
