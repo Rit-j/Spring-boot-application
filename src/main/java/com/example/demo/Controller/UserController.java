@@ -1,9 +1,10 @@
 package com.example.demo.Controller;
 
-
 import com.example.demo.Entity.User;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,27 +21,32 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getUsers(){
-        return this.userService.getUsers();
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> users = this.userService.getUsers();
+        return new ResponseEntity<>(users, HttpStatus.FOUND);
     }
 
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable int id){
-        return this.userService.getUser(id);
+    public ResponseEntity<User> getUser(@PathVariable int id){
+        User u = this.userService.getUser(id);
+        return new ResponseEntity<>(u, HttpStatus.FOUND);
     }
 
     @PostMapping("/addUser")
-    public User addUser(@RequestBody User user){
-        return this.userService.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        User u = this.userService.addUser(user);
+        return new ResponseEntity<>(u, HttpStatus.CREATED);
     }
 
     @PutMapping("/user/{id}")
-    public User update(@PathVariable int id, @RequestBody User user){
-        return this.userService.update(id,user);
+    public ResponseEntity<User> update(@PathVariable int id, @RequestBody User user){
+        User u = this.userService.update(id,user);
+        return new ResponseEntity<>(u, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/user/{id}")
-    public User delete(@PathVariable int id){
-        return this.userService.delete(id);
+    public ResponseEntity<User> delete(@PathVariable int id){
+        User u = this.userService.delete(id);
+        return new ResponseEntity<>(u, HttpStatus.ACCEPTED);
     }
 }

@@ -1,7 +1,8 @@
 package com.example.demo.Service;
 
-import com.example.demo.Dao.UserDao;
+import com.example.demo.Dao.UserRepository;
 import com.example.demo.Entity.User;
+import com.example.demo.Exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,37 +12,37 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Override
     public List<User> getUsers() {
-        return userDao.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public User getUser(int id) {
-        return userDao.findById(id).get();
+        return userRepository.findById(id).orElseThrow(()->new ResourceNotFound("User with id : " + id +" does not exists"));
     }
 
     @Override
     public User addUser(User user) {
-        userDao.save(user);
+        userRepository.save(user);
         return user;
     }
 
     @Override
     public User update(int id, User user) {
-        User u = userDao.findById(id).get();
+        User u = userRepository.findById(id).orElseThrow(()->new ResourceNotFound("User with id : " + id +" does not exists"));;
         u.setName(user.getName());
         u.setCity(user.getCity());
-        userDao.save(u);
+        userRepository.save(u);
         return user;
     }
 
     @Override
     public User delete(int id) {
-        User u = userDao.findById(id).get();
-        userDao.delete(u);
+        User u = userRepository.findById(id).orElseThrow(()->new ResourceNotFound("User with id : " + id +" does not exists"));;
+        userRepository.delete(u);
         return u;
     }
 }
