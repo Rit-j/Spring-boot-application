@@ -6,3 +6,5 @@ For performing the CRUD operations, I have used UserDao interface, which extends
 performing the operations. After this, I had created a Controller class which acts as the entrypoint for all the incoming requests. The controller will then direct 
 these requests to the service layer. The service layer will use the userdao interface to handle these requests.
 The input and output will be in the JSON format. The server will run on port 8080 by default.
+I have also added Validation for different fields in User Entity class.
+Test cases are also added inside the DemoApplicationTests class, for testing the api methods.

@@ -1,36 +1,39 @@
 package com.example.demo.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class User {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotNull(message = "Name cannot be null")
     private String name;
+
+    @Size(min = 1, message = "Min length should be 1")
     private String city;
 
+    @Email
+    private String email;
+
     Date created;
+
     Date updated;
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
 
     @PrePersist
     protected void onCreate() {
@@ -42,29 +45,6 @@ public class User {
         updated = new Date();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public User(int id, String name, String city) {
         this.id = id;
@@ -72,7 +52,9 @@ public class User {
         this.city = city;
     }
 
-    public User() {
+    public User(String name, String city) {
+        this.name = name;
+        this.city = city;
     }
 
     @Override
